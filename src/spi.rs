@@ -281,8 +281,17 @@ pins!(SPI3, AF6,
     feature = "stm32l4x3",
     feature = "stm32l4x5",
     feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 use crate::stm32::SPI2;
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+hal! {
+    // Note that there is a bug in the SVD file where the SPI2EN bit is mislabelled as SPI1EN.
+    SPI2: (spi2, APB1R1, spi1en, spi2rst, pclk1),
+}
 
 #[cfg(any(
     feature = "stm32l4x3",
@@ -302,3 +311,11 @@ pins!(SPI2, AF5,
     SCK: [PB13, PB10, PD1],
     MISO: [PB14, PC2, PD3],
     MOSI: [PB15, PC3, PD4]);
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+pins!(SPI2, AF5,
+    SCK: [PB13, PB10],
+    MISO: [PB14, PC2],
+    MOSI: [PB15, PC3]);
