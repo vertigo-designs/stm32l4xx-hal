@@ -4,7 +4,8 @@ use cast::u8;
 use crate::stm32::{I2C1, I2C2};
 
 use crate::gpio::gpioa::{PA10, PA9};
-use crate::gpio::gpiob::{PB6, PB7, PB10, PB11};
+use crate::gpio::gpiob::{PB6, PB7, PB10, PB11, PB13, PB14};
+use crate::gpio::gpioc::{PC0, PC1};
 use crate::gpio::{AF4, Alternate, OpenDrain, Output};
 use crate::hal::blocking::i2c::{Write, WriteRead, Read};
 use crate::rcc::{APB1R1, Clocks};
@@ -27,25 +28,34 @@ pub enum Error {
     _Extensible,
 }
 
-// FIXME these should be "closed" traits
-/// SCL pin -- DO NOT IMPLEMENT THIS TRAIT
-pub unsafe trait SclPin<I2C> {}
+#[doc(hidden)]
+mod private {
+    pub trait Sealed {}
+}
 
-/// SDA pin -- DO NOT IMPLEMENT THIS TRAIT
-pub unsafe trait SdaPin<I2C> {}
+/// SCL pin. This trait is sealed and cannot be implemented.
+pub unsafe trait SclPin<I2C>: private::Sealed {}
 
-
-unsafe impl SclPin<I2C1> for PA9<Alternate<AF4, Output<OpenDrain>>> {}
-unsafe impl SdaPin<I2C1> for PA10<Alternate<AF4, Output<OpenDrain>>> {}
-unsafe impl SclPin<I2C1> for PB6<Alternate<AF4, Output<OpenDrain>>> {}
-unsafe impl SdaPin<I2C1> for PB7<Alternate<AF4, Output<OpenDrain>>> {}
-unsafe impl SclPin<I2C2> for PB10<Alternate<AF4, Output<OpenDrain>>> {}
-unsafe impl SdaPin<I2C2> for PB11<Alternate<AF4, Output<OpenDrain>>> {}
+/// SDA pin. This trait is sealed and cannot be implemented.
+pub trait SdaPin<I2C>: private::Sealed {}
 
 /// I2C peripheral operating in master mode
 pub struct I2c<I2C, PINS> {
     i2c: I2C,
     pins: PINS,
+}
+
+macro_rules! pins {
+    ($i2c:ident, $af:ident, SCL: [$($sck:ident),*], SCK: [$($scl:ident),*]) => {
+        $(
+            impl private::Sealed for $scl<Alternate<$af, Output<OpenDrain>>> {}
+            impl SclPin for $scl<Alternate<$af, Output<OpenDrain>>> {}
+        )*
+        $(
+            impl private::Sealed for $sda<Alternate<$af, Output<OpenDrain>>> {}
+            impl SdaPin for $sda<Alternate<$af, Output<OpenDrain>>> {}
+        )*
+    }
 }
 
 macro_rules! busy_wait {
@@ -315,4 +325,57 @@ macro_rules! hal {
 hal! {
     I2C1: (i2c1, i2c1en, i2c1rst),
     I2C2: (i2c2, i2c2en, i2c2rst),
+}
+
+pins!(I2C1, AF4,
+    SCL: [PA9, PB6, PB8],
+    SDA: [PA10, PB7, PB9],
+);
+
+pins!(I2C2, AF4,
+    SCL: [PB10, PB13],
+    SDA: [PB11, PB14],
+);
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+{
+    use crate::stm32::{I2C3, I2C4};
+}
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+hal! {
+    I2C3: (i2c3, i2c3en, i2c3rst),
+    I2C4: (i2c4, i2c4en, i2c4rst),
+}
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+pins!(I2C3, AF4,
+    SCL: [PA7, PC0],
+    SDA: [PB4, PC1],
+);
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+{
+    pins!(I2C4, AF2,
+        SCL: [PC0],
+        SDA: [PC1],
+    );
+
+    pins!(I2C4, AF3,
+        SCL: [PB10],
+        SDA: [PB11],
+    );
+
+    pins!(I2C4, AF5,
+        SCL: [PB7],
+        SDA: [PB8],
+    );
 }

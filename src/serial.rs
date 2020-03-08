@@ -309,7 +309,7 @@ pins! {
 }
 
 // UART 4
-#[cfg(any(feature = "stm32l4x5", feature = "stm32l4x6",))]
+#[cfg(any(feature = "stm32l4x5", feature = "stm32l4x6", feature = "stm32l452", ))]
 pins! {
     // UART4: (tx: (PA0, PC10), rx: (PA1, PC11), rts: (PA15), cts: (PB7), AF8),
     UART4: (PA0, PA1, AF8),
@@ -318,7 +318,7 @@ pins! {
     UART4: (PC10, PC11, AF8),
 }
 
-#[cfg(any(feature = "stm32l4x5", feature = "stm32l4x6",))]
+#[cfg(any(feature = "stm32l4x5", feature = "stm32l4x6", feature = "stm32l452", ))]
 pins! {
     UART4: (PA0, PA1, PA15, PB7, AF8),
     UART4: (PC10, PA1, PA15, PB7, AF8),
