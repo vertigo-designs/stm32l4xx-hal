@@ -27,7 +27,7 @@ pub use stm32l4;
 #[cfg(feature = "stm32l4x1")]
 pub use stm32l4::stm32l4x1 as pac;
 
-#[cfg(feature = "stm32l4x2")]
+#[cfg(any(feature = "stm32l4x2", feature = "stm32l452", ))]
 pub use stm32l4::stm32l4x2 as pac;
 
 #[cfg(feature = "stm32l4x3")]
@@ -47,7 +47,8 @@ pub use self::pac::interrupt;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub use crate::pac as device;
 #[cfg(any(
@@ -55,7 +56,8 @@ pub use crate::pac as device;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub use crate::pac as stm32;
 
@@ -65,7 +67,8 @@ pub mod datetime;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod delay;
 #[cfg(any(
@@ -73,7 +76,8 @@ pub mod delay;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod dma;
 #[cfg(any(
@@ -81,7 +85,8 @@ pub mod dma;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod flash;
 #[cfg(any(
@@ -89,7 +94,8 @@ pub mod flash;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod gpio;
 #[cfg(any(
@@ -97,7 +103,8 @@ pub mod gpio;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod i2c;
 #[cfg(any(
@@ -105,7 +112,8 @@ pub mod i2c;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod prelude;
 #[cfg(any(
@@ -113,7 +121,8 @@ pub mod prelude;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod pwr;
 #[cfg(any(
@@ -121,7 +130,8 @@ pub mod pwr;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod rcc;
 #[cfg(any(
@@ -129,7 +139,8 @@ pub mod rcc;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod rng;
 #[cfg(any(
@@ -137,7 +148,8 @@ pub mod rng;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod rtc;
 #[cfg(any(
@@ -145,7 +157,8 @@ pub mod rtc;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod serial;
 #[cfg(any(
@@ -153,7 +166,8 @@ pub mod serial;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod spi;
 #[cfg(any(
@@ -161,7 +175,8 @@ pub mod spi;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod time;
 #[cfg(any(
@@ -169,7 +184,8 @@ pub mod time;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod timer;
 #[cfg(any(
@@ -177,12 +193,13 @@ pub mod timer;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod tsc;
 #[cfg(all(
     feature = "stm32-usbd",
-    any(feature = "stm32l4x2", feature = "stm32l4x3")
+    any(feature = "stm32l4x2", feature = "stm32l4x3", feature = "stm32l452", )
 ))]
 pub mod usb;
 #[cfg(any(
@@ -190,6 +207,7 @@ pub mod usb;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 pub mod pwm;

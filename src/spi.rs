@@ -212,11 +212,18 @@ use crate::stm32::SPI1;
     feature = "stm32l4x2",
     feature = "stm32l4x3",
     feature = "stm32l4x5",
-    feature = "stm32l4x6"
+    feature = "stm32l4x6",
+    feature = "stm32l452",
 ))]
 hal! {
     SPI1: (spi1, APB2, spi1en, spi1rst, pclk2),
 }
+
+#[cfg(feature = "stm32l452")]
+pins!(SPI1, AF5,
+    SCK: [PA1, PA5, PB3, PE13],
+    MISO: [PA6, PA11, PB4, PE14],
+    MOSI: [PA7, PA12, PB5, PE15]);
 
 #[cfg(any(
     feature = "stm32l4x1",
@@ -238,44 +245,6 @@ pins!(SPI1, AF5,
     SCK: [PG2],
     MISO: [PG3],
     MOSI: [PG4]);
-
-#[cfg(any(
-    feature = "stm32l4x1",
-    feature = "stm32l4x2",
-    feature = "stm32l4x5",
-    feature = "stm32l4x6",
-))]
-use crate::{stm32::SPI3, gpio::AF6};
-
-#[cfg(any(
-    feature = "stm32l4x1",
-    feature = "stm32l4x2",
-    feature = "stm32l4x5",
-    feature = "stm32l4x6",
-))]
-hal! {
-    SPI3: (spi3, APB1R1, spi3en, spi3rst, pclk1),
-}
-
-#[cfg(any(
-    feature = "stm32l4x1",
-    feature = "stm32l4x2",
-    feature = "stm32l4x5",
-    feature = "stm32l4x6",
-))]
-pins!(SPI3, AF6,
-    SCK: [PB3, PC10],
-    MISO: [PB4, PC11],
-    MOSI: [PB5, PC12]);
-
-#[cfg(any(
-    feature = "stm32l4x5",
-    feature = "stm32l4x6",
-))]
-pins!(SPI3, AF6,
-    SCK: [PG9],
-    MISO: [PG10],
-    MOSI: [PG11]);
 
 #[cfg(any(
     feature = "stm32l4x3",
@@ -312,10 +281,48 @@ pins!(SPI2, AF5,
     MISO: [PB14, PC2, PD3],
     MOSI: [PB15, PC3, PD4]);
 
-#[cfg(any(
-    feature = "stm32l452",
-))]
+#[cfg(feature = "stm32l452")]
 pins!(SPI2, AF5,
     SCK: [PB13, PB10],
     MISO: [PB14, PC2],
     MOSI: [PB15, PC3]);
+
+#[cfg(any(
+    feature = "stm32l4x1",
+    feature = "stm32l4x2",
+    feature = "stm32l4x5",
+    feature = "stm32l4x6",
+    feature = "stm32l452",
+))]
+use crate::{stm32::SPI3, gpio::AF6};
+
+#[cfg(any(
+    feature = "stm32l4x1",
+    feature = "stm32l4x2",
+    feature = "stm32l4x5",
+    feature = "stm32l4x6",
+))]
+hal! {
+    SPI3: (spi3, APB1R1, spi3en, spi3rst, pclk1),
+}
+
+#[cfg(any(
+    feature = "stm32l4x1",
+    feature = "stm32l4x2",
+    feature = "stm32l4x5",
+    feature = "stm32l4x6",
+    feature = "stm32l452",
+))]
+pins!(SPI3, AF6,
+    SCK: [PB3, PC10],
+    MISO: [PB4, PC11],
+    MOSI: [PB5, PC12]);
+
+#[cfg(any(
+    feature = "stm32l4x5",
+    feature = "stm32l4x6",
+))]
+pins!(SPI3, AF6,
+    SCK: [PG9],
+    MISO: [PG10],
+    MOSI: [PG11]);
