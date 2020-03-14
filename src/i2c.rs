@@ -336,33 +336,43 @@ pins! {
 #[cfg(any(
     feature = "stm32l452",
 ))]
-use crate::stm32::{I2C3, I2C4};
-
-#[cfg(any(
-    feature = "stm32l452",
-))]
-use crate::gpio::gpioc::{PC1, PC0};
-
-#[cfg(any(
-    feature = "stm32l452",
-))]
-use crate::gpio::gpiob::{PB4, PB8, PB9};
-
-#[cfg(any(
-    feature = "stm32l452",
-))]
-use crate::gpio::gpioa::{PA7};
-
-#[cfg(any(
-    feature = "stm32l452",
-))]
-use crate::gpio::{AF2, AF3, AF5};
+use crate::stm32::I2C3;
 
 #[cfg(any(
     feature = "stm32l452",
 ))]
 hal! {
     I2C3: (i2c3, APB1R1, i2c3en, i2c3rst),
+}
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+use crate::gpio::{
+    gpioa::PA7,
+    gpiob::{PB4, PB8, PB9},
+    gpioc::{PC1, PC0},
+    AF2,
+    AF3,
+    AF5
+};
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+pins! {
+    I2C3: (AF4, SCL: [PA7, PC0], SDA: [PB4, PC1]),
+}
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+use crate::stm32::I2C4;
+
+#[cfg(any(
+    feature = "stm32l452",
+))]
+hal! {
     I2C4: (i2c4, APB1R2, i2c4en, i2c4rst),
 }
 
@@ -370,8 +380,7 @@ hal! {
     feature = "stm32l452",
 ))]
 pins! {
-    I2C3: (AF4, SCL: [PA7, PC0], SDA: [PB4, PC1]),
     I2C4: (AF2, SCL: [PC0], SDA: [PC1]),
     I2C4: (AF3, SCL: [PB10], SDA: [PB11]),
-    I2C4: (AF5, SCL: [PB7], SDA: [PB8]),
+    I2C4: (AF5, SCL: [PB6], SDA: [PB7]),
 }
