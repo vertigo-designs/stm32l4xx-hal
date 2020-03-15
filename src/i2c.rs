@@ -195,7 +195,7 @@ macro_rules! hal {
                     // START and prepare to send `bytes`
                     self.i2c.cr2.write(|w| {
                         w.sadd()
-                            .bits(addr as u16) // upto 9 bits for address
+                            .bits(addr.wrapping_shl(1u32) as u16) // upto 9 bits for address
                             .rd_wrn()
                             .clear_bit()
                             .nbytes()
@@ -229,7 +229,7 @@ macro_rules! hal {
                     buffer: &mut [u8],) -> Result<(), Error> {
                     self.i2c.cr2.write(|w| {
                         w.sadd()
-                            .bits(addr as u16)
+                            .bits(addr.wrapping_shl(1u32) as u16) // upto 9 bits for address
                             .rd_wrn()
                             .set_bit()
                             .nbytes()
@@ -270,7 +270,7 @@ macro_rules! hal {
                     // START and prepare to send `bytes`
                     self.i2c.cr2.write(|w| {
                         w.sadd()
-                            .bits(addr as u16)
+                            .bits(addr.wrapping_shl(1u32) as u16) // upto 9 bits for address
                             .rd_wrn()
                             .clear_bit()
                             .nbytes()
@@ -296,7 +296,7 @@ macro_rules! hal {
                     // reSTART and prepare to receive bytes into `buffer`
                     self.i2c.cr2.write(|w| {
                         w.sadd()
-                            .bits(addr as u16)
+                            .bits(addr.wrapping_shl(1u32) as u16) // upto 9 bits for address
                             .rd_wrn()
                             .set_bit()
                             .nbytes()
